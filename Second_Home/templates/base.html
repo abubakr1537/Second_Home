@@ -6,50 +6,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Second Home</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<style type="text/css">
+		html {
+		  	height: 100%;
+		  	box-sizing: border-box;
+		}
 
+		*,
+		*:before,
+		*:after {
+		  box-sizing: inherit;
+		}
+
+	label {
+		color: green;
+		font-size: 15px;
+		font-weight: bold;
+		}
+
+
+		body {
+		  position: relative;
+		  margin: 0;
+		  padding-bottom: 6rem;
+		  min-height: 100%;
+		  font-family: "Helvetica Neue", Arial, sans-serif;
+		}
+		.footer {
+		  	position: absolute;
+		  	right: 0;
+		  	bottom: 0;
+		  	left: 0;
+		  	padding: 1rem;
+		  	background-color: #efefef;
+		  	text-align: center;
+		}
+
+		#message {
+		  	display:none;
+		}
+
+		#message p {
+		  	font-size: 15px;
+		}
+
+		.valid {
+		  	color: green;
+		}
+
+		.valid:before {
+		  	left: -35px;
+		  	content: "✔";
+		}
+
+		.invalid {
+		  	color: red;
+		}
+
+		.invalid:before {
+		  	left: -35px;
+		  	content: "✖";
+		}
+
+	</style>
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<header class="fixed-top">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
 
 		 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  	</button>
 		  	<div class="container">
-		  		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		  		<div class="collapse navbar-collapse " id="navbarSupportedContent">
 		  			<a class="navbar-brand" href="{% url 'home' %}">Second <img src="{% static 'img/logo.png' %}"></a>
+
+		  			 <form class="form-inline ml-5" action="">
+					    <input class="form-control mr-sm-2" type="text" placeholder="Search for property">
+					    <button class="btn btn-info" type="submit">Search</button>
+					 </form>
 			    	<ul class="navbar-nav ml-auto">
-			    		<li></li>
-			      		<li class="nav-item active">
-			        		<a class="nav-link" href="{% url 'signup' %}">Sign Up <span class="sr-only">(current)</span></a>
-			      		</li>
-			      		<li>
-			      			<span class="nav-link" href=""> | </span>
-			      		</li>
-			      		<li class="nav-item active">
-			        		<a class="nav-link" href="{% url 'login' %}"> Login <span class="sr-only">(current)</span></a>
-			      		</li>
+			    		{% if user.is_authenticated %}
+				    		<li class="nav-item">
+				        		<span class="nav-link">Welcome: {{ user.first_name }}</span>
+				      		</li>
+				      		<li class="nav-item">
+				        		<a class="nav-link" href="{% url 'create' %}"><i class='fas fa-plus'></i></a>
+				      		</li>
+				      		<li class="nav-item">
+				        		<a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">Log Out<span class="sr-only">(current)</span></a>
+				      		</li>
+				      		<form id="logout" method="POST" action="{% url 'logout' %}">
+				      			{% csrf_token %}
+				      			<input type="hidden">
+				      		</form>
+			      		{% else %}
+
+				      		<li class="nav-item">
+				        		<a class="nav-link" href="{% url 'signup' %}">Sign Up &nbsp;&nbsp; <span class="sr-only">(current)</span></a>
+				      		</li>
+				      		
+				      		<li class="nav-item">
+				        		<a class="nav-link" href="{% url 'login' %}"> Login <span class="sr-only">(current)</span></a>
+				      		</li>
+				      	{% endif %}
 			    	</ul>
 			  	</div>
 		  	</div>
 		</nav>
 	</header>
-	<main>
-		
+
+	<main class="mt-5 flex-shrink-0">
+		<div class="container">
+			{% block content %}
+
+			{% endblock %}
+		</div>
 	</main>
-	{% block content %}
 
-	{% endblock %}
-
-	<footer>
-	  <div class="container text-center">
-	  	<p>© Second Home {% now "Y" %}</p>
-	  </div>	
+	<footer class="footer">
+	  	<div class="container">
+	  		<span class="muted">© Second Home {% now "Y" %}</span>
+	  	</div>
 	</footer>
+
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<script>
+		var myInput = document.getElementById("password1");
+		var letter = document.getElementById("letter");
+		var capital = document.getElementById("capital");
+		var number = document.getElementById("number");
+		var length = document.getElementById("length");
+
+		myInput.onfocus = function() {
+		  	document.getElementById("message").style.display = "block";
+		}
+
+		myInput.onblur = function() {
+		  	document.getElementById("message").style.display = "none";
+		}
+
+		myInput.onkeyup = function() {
+		  	var lowerCaseLetters = /[a-z]/g;
+		  	if(myInput.value.match(lowerCaseLetters)) {
+		    	letter.classList.remove("invalid");
+		    	letter.classList.add("valid");
+		  	} else {
+		    	letter.classList.remove("valid");
+		    	letter.classList.add("invalid");
+			}
+
+			var upperCaseLetters = /[A-Z]/g;
+		  	if(myInput.value.match(upperCaseLetters)) {
+		    	capital.classList.remove("invalid");
+		    	capital.classList.add("valid");
+		  	} else {
+		    	capital.classList.remove("valid");
+		    	capital.classList.add("invalid");
+		  	}
+
+		  	var numbers = /[0-9]/g;
+		  	if(myInput.value.match(numbers)) {
+		    	number.classList.remove("invalid");
+		    	number.classList.add("valid");
+		  	} else {
+		    	number.classList.remove("valid");
+		    	number.classList.add("invalid");
+		  	}
+
+		  	if(myInput.value.length >= 8) {
+		    	length.classList.remove("invalid");
+		    	length.classList.add("valid");
+		  	} else {
+		    	length.classList.remove("valid");
+		    	length.classList.add("invalid");
+		  	}
+		}
+	</script>
+	{% block javascript %}
+	
+    {% endblock %}
 </body>
 	
 </html>
