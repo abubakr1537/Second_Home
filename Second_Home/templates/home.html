@@ -5,22 +5,41 @@
 	<div class="" style="margin-top: 100px; width: 600px">
 
 	</div>
-
-{% for product in products.all %}
-
+{% if search_product %}
+  {% for product in search_product.all %}
     <div class="row">
-      	<div class="col-3">
-      		<img class="img-fluid img-thumbnail" src="{{product.images.url}}" >
-      	</div>
-      	<div class="col-6">
-      		<h1>{{ product.title }}</h1>
-      		<blockquote class="font-italic blockquote" style="font-size: 15px; color: #595959"> Addres: {{ product.address }}</blockquote>
-      		Price:<label >${{product.price}}</label>
-      		<a href="{% url 'detail' product.id %}"><button class="btn btn-primary float-right">Details</button></a>
-      	</div>
+        <div class="col-3">
+          <img class="img-fluid img-thumbnail" src="{{product.images.url}}" >
+        </div>
+        <div class="col-6">
+          <h1>{{ product.title }}</h1>
+          <blockquote class="font-italic blockquote" style="font-size: 15px; color: #595959"> Addres: {{ product.address }}</blockquote>
+          Price:<label >${{product.price}}</label>
+          <a href="{% url 'detail' product.id %}"><button class="btn btn-primary float-right">Details</button></a>
+        </div>
     </div>
     <hr>
     <br>
-{% endfor %}  
+  {% endfor %}
+
+{% elif error %}
+  <p style="color: red">{{error}}</p>
+{% else %} 
+  {% for product in products.all %}
+      <div class="row">
+        	<div class="col-3">
+        		<img class="img-fluid img-thumbnail" src="{{product.images.url}}" >
+        	</div>
+        	<div class="col-6">
+        		<h1>{{ product.title }}</h1>
+        		<blockquote class="font-italic blockquote" style="font-size: 15px; color: #595959"> Addres: {{ product.address }}</blockquote>
+        		Price:<label >${{product.price}}</label>
+        		<a href="{% url 'detail' product.id %}"><button class="btn btn-primary float-right">Details</button></a>
+        	</div>
+      </div>
+      <hr>
+      <br>
+  {% endfor %}
+{% endif %}  
 {% endblock %}
 

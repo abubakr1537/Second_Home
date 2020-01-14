@@ -27,8 +27,7 @@ def create(request):
 			return render(request, 'create.html', {'error': 'All Fields are required'})
 	else:
 		return render(request, 'create.html')
-
-        
+       
 
 def detail(request, product_id):
 	product = get_object_or_404(Product, pk=product_id)
@@ -65,8 +64,17 @@ def modify(request, product_id):
 		modify_product.price = request.POST['price']
 		modify_product.address = request.POST['address']
 		modify_product.save()
-		
-
-		
 		return redirect('userroom')
 	return render(request, 'modify.html', {'modify_product': modify_product})
+
+def search(request):
+	if request.method == 'POST':
+		if Product.objects.filter(title__contains = request.POST['search']):
+			search_product = Product.objects.filter(title__contains = request.POST['search'])
+			return render(request, 'home.html',{'search_product':search_product})
+
+		elif Product.objects.filter(address__contains = request.POST['search']):
+			search_product = Product.objects.filter(address__contains = request.POST['search'])
+			return render(request, 'home.html',{'search_product':search_product})
+		else:
+			return render(request, 'home.html', {'error':"Sorry, we couldn find your request"})
