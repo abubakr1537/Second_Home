@@ -1,0 +1,4 @@
+1. Python 3.7
+2. DJango 2.1.5
+3. Pillow
+4. psycopg2
