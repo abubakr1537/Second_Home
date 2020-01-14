@@ -32,17 +32,13 @@
 			<textarea rows="6" class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
 
 		    <div class="file-input mt-3">
-		    	<label for="images">Images</label><br>
-		    	<input class="file-input" type="file" id="images" name="images"  data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
- multiple>
+		    	<label for="fileupload">Images</label><br>
+		    	<input class="file-input" type="file" id="fileupload" name="images" multiple="True">
 		    </div>
 
 		    <button class="btn btn-primary float-right" type="submit">Create</button>
 		    
 		</form>
-	</div>
-	<div class="col-3">
-		
 	</div>
 </div>
 {% endblock %}

@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required
+from django.views import View
 from django.http import JsonResponse
 from .models import Product
+
 from django.utils import timezone
+
 
 # Create your views here.
 @login_required(login_url="/accounts/signup")
@@ -19,11 +22,13 @@ def create(request):
 			product.address = request.POST['address']
 			product.hunter = request.user
 			product.save()
-			return redirect('/products/' + str(product.id))
+			return redirect('userroom')
 		else:
 			return render(request, 'create.html', {'error': 'All Fields are required'})
 	else:
 		return render(request, 'create.html')
+
+        
 
 def detail(request, product_id):
 	product = get_object_or_404(Product, pk=product_id)
@@ -36,3 +41,32 @@ def stars(request, product_id):
 		product.stars += 1
 		product.save()
 		return redirect('home')
+
+@login_required(login_url="/accounts/signup")
+def user_room(request):
+	sorted_product = Product.objects.filter(hunter=request.user)
+	return render(request, 'user_room.html', {'sorted_product': sorted_product})
+
+@login_required(login_url="/accounts/signup")
+def delete(request, product_id):
+	delete_product = get_object_or_404(Product, pk=product_id)
+	delete_product.delete()
+	sorted_product = Product.objects.filter(hunter=request.user)
+	return render(request, 'user_room.html', {'sorted_product': sorted_product})
+
+@login_required(login_url="/accounts/signup")
+def modify(request, product_id):
+	modify_product = get_object_or_404(Product, pk=product_id)
+	if request.method == 'POST':
+		modify_product.title = request.POST['title']
+		modify_product.tel_number = request.POST['tel_number']
+		modify_product.description = request.POST['description']
+		modify_product.pub_date = timezone.datetime.now()
+		modify_product.price = request.POST['price']
+		modify_product.address = request.POST['address']
+		modify_product.save()
+		
+
+		
+		return redirect('userroom')
+	return render(request, 'modify.html', {'modify_product': modify_product})

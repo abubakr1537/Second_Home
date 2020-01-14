@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<div class="row mb-3" style="margin-top: 100px;">
+    <a class="ml-auto" href="{% url 'create' %}"><button class="btn btn-primary">Add new post</button></a>
+	</div>
+{% for sorted_products in sorted_product.all %}
+    <div class="row">
+      	<div class="col-3">
+      		<img class="img-fluid img-thumbnail" src="{{sorted_products.images.url}}" >
+      	</div>
+      	<div class="col-6">
+      		<h1>{{ sorted_products.title }}</h1>
+      		<blockquote class="font-italic blockquote" style="font-size: 15px; color: #595959"> Addres: {{ sorted_products.address }}</blockquote>
+      		Price:<label >${{sorted_products.price}}</label>
+          <a href="{% url 'delete' sorted_products.id %}"><button class="btn btn-danger float-right ml-2">Delete</button></a>
+          <a href="{% url 'modify' sorted_products.id %}"><button class="btn btn-success float-right">Modify</button></a>
+          
+      	</div>
+    </div>
+    <hr>
+    <br>
+{% endfor %}  
+{% endblock %}
+

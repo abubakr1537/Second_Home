@@ -4,23 +4,33 @@
 {% block content %}
 
 <div class="row" style="margin-top: 100px;">
-	<div class="col-10">
+	<div class="col-7">
 		<h1>{{product.title}}</h1>
 		<blockquote class="font-italic blockquote" style="font-size: 15px; color: #595959"> Addres: {{ product.address }}</blockquote>
 	</div>
-	<div class="col-2">
-		<label>Price: ${{ product.price}}</label>
+	<div class="col-3">
+		<br>
+		<br>
+		<label style="font-size: 20px">Price: ${{ product.price}}</label>
 	</div>
 </div>
 <div class="row">
-	<div class="col-9">
+	<div class="col-9 card p-2">
 		<img  class="img-fluid" src="{{ product.images.url }}">
-	</div>
-	<div class="col-3">
-		
 	</div>
 </div>
 
-
-
+<div class="row">
+	<div class="col-9 card mt-3 ">
+		<div class="card-body">
+			<p class="card-title"><kbd>Cell Phone Number</p>
+			<p class="card-text">{{product.tel_number}}</p>
+		</div>
+		<div class="card-body">
+			<p class="card-title"><kbd>Description</p>
+			<p class="card-text">{{ product.description }}</p>
+		</div>
+		
+	</div>
+</div>
 {% endblock %}

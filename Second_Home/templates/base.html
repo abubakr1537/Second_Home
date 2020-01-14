@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Second Home</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Baskervville|Source+Serif+Pro&display=swap" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
@@ -71,6 +72,13 @@
 		  	left: -35px;
 		  	content: "✖";
 		}
+		h1{
+			font-family: 'Baskervville', serif;
+		}
+		p{
+			font-family: 'Source Serif Pro', serif;
+			font-weight: bold
+		}
 
 	</style>
 </head>
@@ -95,8 +103,7 @@
 				        		<span class="nav-link">Welcome: {{ user.first_name }}</span>
 				      		</li>
 				      		<li class="nav-item">
-				        		<a class="nav-link" href="{% url 'create' %}"><i class='fas fa-plus'></i></a>
-				      		</li>
+								<a class="nav-link" href="{% url 'userroom' %}"> My Posts <span class="sr-only">(current)</span></a>				      		</li>
 				      		<li class="nav-item">
 				        		<a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">Log Out<span class="sr-only">(current)</span></a>
 				      		</li>
@@ -191,9 +198,6 @@
 		  	}
 		}
 	</script>
-	{% block javascript %}
-	
-    {% endblock %}
 </body>
 	
 </html>
